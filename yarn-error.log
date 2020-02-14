@@ -1,0 +1,43 @@
+Arguments: 
+  F:\software\nodejs\node.exe F:\software\yarn\bin\yarn.js add mocha @types/mocha chai @types/chai typscript ts-node -D
+
+PATH: 
+  F:\repo\bin;C:\Users\xiaomi\bin;F:\software\git\Git\mingw64\bin;F:\software\git\Git\usr\local\bin;F:\software\git\Git\usr\bin;F:\software\git\Git\usr\bin;F:\software\git\Git\mingw64\bin;F:\software\git\Git\usr\bin;C:\Users\xiaomi\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;F:\software\nodejs;F:\software\git\Git\cmd;F:\software\yarn\bin;C:\Users\xiaomi\AppData\Local\Microsoft\WindowsApps;C:\Users\xiaomi\AppData\Roaming\npm;F:\software\vscode\Microsoft VS Code\bin;C:\Users\xiaomi\AppData\Local\Yarn\bin;F:\software\git\Git\usr\bin\vendor_perl;F:\software\git\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.21.1
+
+Node version: 
+  10.16.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.npm.taobao.org/typscript: Not found
+      at Request.params.callback [as _callback] (F:\software\yarn\lib\cli.js:66056:18)
+      at Request.self.callback (F:\software\yarn\lib\cli.js:140665:22)
+      at Request.emit (events.js:198:13)
+      at Request.<anonymous> (F:\software\yarn\lib\cli.js:141637:10)
+      at Request.emit (events.js:198:13)
+      at IncomingMessage.<anonymous> (F:\software\yarn\lib\cli.js:141559:12)
+      at Object.onceWrapper (events.js:286:20)
+      at IncomingMessage.emit (events.js:203:15)
+      at endReadableNT (_stream_readable.js:1129:12)
+      at process._tickCallback (internal/process/next_tick.js:63:19)
+
+npm manifest: 
+  {
+    "name": "promise-easy",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/strugglebak/promise-easy.git",
+    "author": "moss <dxp157@sohu.com>",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
