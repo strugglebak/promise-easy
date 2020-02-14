@@ -2,17 +2,19 @@ class PromiseEasy {
   succeed = null // 用来保存成功回调
   fail = null // 用来保存失败回调
   state = 'pending'
-  resolve() {
+  resolve(result) {
     setTimeout(() => {
+      this.state = 'fulfilled'
       if (typeof this.succeed === 'function') {
-        this.succeed()
+        this.succeed(result)
       }
     }, 0)
   }
-  reject() {
+  reject(reason) {
     setTimeout(() => {
+      this.state = 'rejected'
       if (typeof this.fail === 'function') {
-        this.fail()
+        this.fail(reason)
       }
     }, 0)
   }

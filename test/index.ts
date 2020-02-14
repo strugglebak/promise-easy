@@ -82,4 +82,20 @@ describe('Promise', () => {
 
     promise.then(false, null)
   })
+  it('2.2.2.1 此函数必须在 promise 完成(fulfilled) 后被调用,并把 promise 的值作为它的第一个参数', done => {
+    const success = sinon.fake()
+    let promise = new Promise((resolve, reject) => {
+      assert.isFalse(success.called)
+      resolve('hi')
+      setTimeout(() => {
+        assert(promise.state === 'fulfilled')
+        assert.isTrue(success.called)
+        assert.isTrue(success.calledWith('hi'))
+        done()
+      }, 0)
+    })
+
+    promise.then(success)
+  })
+  
 })
