@@ -135,4 +135,17 @@ describe('Promise', () => {
       done()
     }, 0)
   })
+
+  it('2.2.4 失败回调', done => {
+    const fail = sinon.fake()
+    const promise = new Promise((resolve, reject) => {
+      reject()
+    })
+    promise.then(null, fail)
+    assert.isFalse(fail.called)
+    setTimeout(() => {
+      assert.isTrue(fail.called)
+      done()
+    }, 0)
+  })
 })
