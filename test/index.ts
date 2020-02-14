@@ -1,6 +1,11 @@
-import { assert } from 'chai'
+import * as chai from 'chai'
 import { describe, it } from 'mocha'
 import Promise from '../src/promise'
+import * as sinon from 'sinon'
+import * as sinonChai from 'sinon-chai'
+
+const assert = chai.assert
+chai.use(sinonChai)
 
 describe('Promise', () => {
   it('是一个类', () => {
@@ -27,23 +32,27 @@ describe('Promise', () => {
     assert.isFunction(promise.then)
   })
   it('new Promise(fn) 中的函数立即执行', () => {
-    let called = false
-    new Promise(() => {
-      called = true
+    const fn = sinon.fake()
+    new Promise(fn)
+    assert(fn.called)
+  })
+  it('new Promise(fn) 中的 fn 执行的时候接受 resolve 和 reject 两个函数', done => {
+    new Promise((resolve, reject) => {
+      assert.isFunction(resolve)
+      assert.isFunction(reject)
+      done()
     })
-    // @ts-ignore
-    assert(called === true)
   })
   it('promise.then(success) 中的 success 会在 resolve 被调用后执行', done => {
-    let called = false
+    let success = sinon.fake()
     const promise = new Promise((resolve, reject) => {
-      assert(called === false)
+      assert.isFalse(success.called)
       resolve()
       // 这里只有等一会才能断言 called = true
-      // 因为顺序是先 then -> 调用 fn -> 调用 succeed
+      // 因为顺序是先 then -> 调用 success -> 调用 succeed
       // 而 succeed 是放入了 setTimeout 中的
       setTimeout(() => { 
-        assert(called === true)
+        assert.isTrue(success.called)
         // 如果代码里面需要异步的测试，则需要加 done
         // 表示异步测试的完成，告诉 mocha 可以检查其测试结果了
         // 不然很多个任务都是异步测试的话，mocha 就不知道哪个是先完成的(这里 mocha 对于测试用例是一个一个同步执行的)
@@ -51,9 +60,6 @@ describe('Promise', () => {
       });
     })
     // @ts-ignore
-    promise.then(() => {
-      called = true
-    })
+    promise.then(success)
   })
-  
 })
