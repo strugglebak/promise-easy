@@ -102,9 +102,9 @@ describe('Promise', () => {
     promise.then(success)
   })
 
-  it(`2.2.2.1 此函数必须在promise rejected后被调用,并把promise 的reason作为它的第一个参数
-    2.2.2.2 此函数在promise rejected之前绝对不能被调用
-    2.2.2.2 此函数绝对不能被调用超过一次
+  it(`2.2.3.1 此函数必须在promise rejected后被调用,并把promise 的reason作为它的第一个参数
+    2.2.3.2 此函数在promise rejected之前绝对不能被调用
+    2.2.3.3 此函数绝对不能被调用超过一次
   `, done => {
     const fail = sinon.fake()
     let promise = new Promise((resolve, reject) => {
