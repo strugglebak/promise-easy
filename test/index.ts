@@ -158,4 +158,14 @@ describe('Promise', () => {
       done()
     })
   })
+  it('2.2.5 失败回调', done => {
+    const promise = new Promise((resolve, reject) => {
+      reject()
+    })
+    promise.then(null, function() {
+      'use strict'
+      assert(this === undefined)
+      done()
+    })
+  })
 })
