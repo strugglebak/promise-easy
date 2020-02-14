@@ -82,20 +82,44 @@ describe('Promise', () => {
 
     promise.then(false, null)
   })
-  it('2.2.2.1 此函数必须在 promise 完成(fulfilled) 后被调用,并把 promise 的值作为它的第一个参数', done => {
+  it(`2.2.2.1 此函数必须在 promise 完成(fulfilled) 后被调用,并把 promise 的值作为它的第一个参数
+    2.2.2.2 此函数在promise完成(fulfilled)之前绝对不能被调用
+    2.2.2.3 此函数绝对不能被调用超过一次
+  `, done => {
     const success = sinon.fake()
     let promise = new Promise((resolve, reject) => {
       assert.isFalse(success.called)
       resolve('hi')
+      resolve('hii')
       setTimeout(() => {
         assert(promise.state === 'fulfilled')
-        assert.isTrue(success.called)
+        assert.isTrue(success.calledOnce)
         assert.isTrue(success.calledWith('hi'))
         done()
       }, 0)
     })
 
     promise.then(success)
+  })
+
+  it(`2.2.2.1 此函数必须在promise rejected后被调用,并把promise 的reason作为它的第一个参数
+    2.2.2.2 此函数在promise rejected之前绝对不能被调用
+    2.2.2.2 此函数绝对不能被调用超过一次
+  `, done => {
+    const fail = sinon.fake()
+    let promise = new Promise((resolve, reject) => {
+      assert.isFalse(fail.called)
+      reject('hi')
+      reject('hii')
+      setTimeout(() => {
+        assert(promise.state === 'rejected')
+        assert.isTrue(fail.calledOnce)
+        assert.isTrue(fail.calledWith('hi'))
+        done()
+      }, 0)
+    })
+
+    promise.then(null, fail)
   })
   
 })
