@@ -75,4 +75,11 @@ describe('Promise', () => {
     // @ts-ignore
     promise.then(null, fail)
   })
+  it('2.2.1 onFulfilled 和 onRejected 都是可选的参数', () => {
+    const promise = new Promise(resovle => {
+      resovle()
+    })
+
+    promise.then(false, null)
+  })
 })
