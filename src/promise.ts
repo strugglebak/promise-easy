@@ -7,7 +7,7 @@ class PromiseEasy {
       if (this.state !== 'pending') return 
       this.state = 'fulfilled'
       if (typeof this.succeed === 'function') {
-        this.succeed(result)
+        this.succeed.call(undefined, result)
       }
     }, 0)
   }
@@ -16,7 +16,7 @@ class PromiseEasy {
       if (this.state !== 'pending') return 
       this.state = 'rejected'
       if (typeof this.fail === 'function') {
-        this.fail(reason)
+        this.fail.call(undefined, reason)
       }
     }, 0)
   }
