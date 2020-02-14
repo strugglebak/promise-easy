@@ -62,4 +62,17 @@ describe('Promise', () => {
     // @ts-ignore
     promise.then(success)
   })
+  it('promise.then(null, fail) 中的 fail 会在 reject 被调用后执行', done => {
+    let fail = sinon.fake()
+    const promise = new Promise((resolve, reject) => {
+      assert.isFalse(fail.called)
+      reject()
+      setTimeout(() => { 
+        assert.isTrue(fail.called)
+        done()
+      });
+    })
+    // @ts-ignore
+    promise.then(null, fail)
+  })
 })
