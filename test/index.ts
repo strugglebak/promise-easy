@@ -187,4 +187,23 @@ describe('Promise', () => {
       done()
     }, 0)
   })
+  it('2.2.6 失败回调', done => {
+    const promise = new Promise((resolve, reject) => {
+      reject()
+    })
+    const callbacks = [sinon.fake(), sinon.fake(), sinon.fake()]
+    promise.then(null, callbacks[0])
+    promise.then(null, callbacks[1])
+    promise.then(null, callbacks[2])
+
+    setTimeout(() => {
+      assert(callbacks[0].called)
+      assert(callbacks[1].called)
+      assert(callbacks[2].called)
+      // 如果/当 promise 完成执行（fulfilled）,各个相应的onFulfilled回调 必须根据最原始的then 顺序来调用
+      assert(callbacks[1].calledAfter(callbacks[0]))
+      assert(callbacks[2].calledAfter(callbacks[1]))
+      done()
+    }, 0)
+  })
 })
