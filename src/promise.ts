@@ -5,6 +5,7 @@ class PromiseEasy {
     setTimeout(() => {
       if (this.state !== 'pending') return 
       this.state = 'fulfilled'
+      // 遍历 callbacks, 调用所有的 handle
       this.callbacks.forEach(handle => {
         const succeed = handle[0]
         if (typeof succeed === 'function') {
@@ -17,6 +18,7 @@ class PromiseEasy {
     setTimeout(() => {
       if (this.state !== 'pending') return 
       this.state = 'rejected'
+      // 遍历 callbacks, 调用所有的 handle
       this.callbacks.forEach(handle => {
         const fail = handle[1]
         if (typeof fail === 'function') {
@@ -40,7 +42,7 @@ class PromiseEasy {
     if (typeof fail === 'function') {
       handle[1] = fail
     }
-
+    // 将函数 push 进 callbacks 中
     this.callbacks.push(handle)
   }
 }
