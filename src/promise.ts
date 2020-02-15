@@ -1,23 +1,28 @@
 class PromiseEasy {
-  succeed = null // 用来保存成功回调
-  fail = null // 用来保存失败回调
   state = 'pending'
+  callbacks = [] // 用来保存成功以及失败回调的数组
   resolve(result) {
     setTimeout(() => {
       if (this.state !== 'pending') return 
       this.state = 'fulfilled'
-      if (typeof this.succeed === 'function') {
-        this.succeed.call(undefined, result)
-      }
+      this.callbacks.forEach(handle => {
+        const succeed = handle[0]
+        if (typeof succeed === 'function') {
+          succeed.call(undefined, result)
+        }
+      })
     }, 0)
   }
   reject(reason) {
     setTimeout(() => {
       if (this.state !== 'pending') return 
       this.state = 'rejected'
-      if (typeof this.fail === 'function') {
-        this.fail.call(undefined, reason)
-      }
+      this.callbacks.forEach(handle => {
+        const fail = handle[1]
+        if (typeof fail === 'function') {
+          fail.call(undefined, reason)
+        }
+      })
     }, 0)
   }
   constructor(fn) {
@@ -28,12 +33,15 @@ class PromiseEasy {
   }
 
   then(succeed?, fail?) {
+    const handle = []
     if (typeof succeed === 'function') {
-      this.succeed = succeed
+      handle[0] = succeed
     }
     if (typeof fail === 'function') {
-      this.fail = fail
+      handle[1] = fail
     }
+
+    this.callbacks.push(handle)
   }
 }
 
